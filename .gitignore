@@ -1,0 +1,3 @@
+.vagrant/
+local-cluster-rsa-key*
+vagrant-ssh.cfg

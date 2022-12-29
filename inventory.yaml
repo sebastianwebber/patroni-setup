@@ -1,0 +1,5 @@
+all:
+  hosts:
+    db-node-1:
+    db-node-2:
+    db-node-3:

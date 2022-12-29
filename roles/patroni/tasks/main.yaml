@@ -1,0 +1,57 @@
+---
+- name: disable postgres modules
+  shell: dnf -yq module disable postgresql
+
+- name: install postgres packages and patroni deps
+  ansible.builtin.package:
+    name:
+      - python39
+      - python39-devel
+      - python39-urllib3
+      - python39-psycopg2
+      - gcc
+      - "postgresql{{ postgres_version }}-server"
+      - "postgresql{{ postgres_version }}-contrib"
+    state: present
+
+- name: disable postgres service
+  ansible.builtin.service:
+    name: "postgresql-{{ postgres_version }}"
+    enabled: no
+
+- name: install patroni and its deps
+  ansible.builtin.pip:
+    name:
+      - setuptools_rust
+      - patroni[raft]
+
+- name: create patroni config file
+  ansible.builtin.template:
+    src: "{{ item.template }}.j2"
+    dest: "{{ item.dest }}"
+    owner: postgres
+    group: postgres
+    mode: "0644"
+  loop:
+    - template: patroni.yaml
+      dest: "{{ patroni_config_file }}"
+    - template: systemd.conf
+      dest: /etc/systemd/system/patroni.service
+    - template: patroni-env.sh
+      dest: /etc/profile.d/patroni-env.sh
+  notify:
+    - reload patroni
+
+- name: Create raft directory
+  ansible.builtin.file:
+    path: "{{ patroni_raft_data_dir }}"
+    state: directory
+    mode: "0755"
+    owner: postgres
+    group: postgres
+
+- name: start patroni
+  ansible.builtin.systemd:
+    name: patroni
+    state: started
+    daemon_reload: yes
