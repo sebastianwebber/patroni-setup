@@ -14,6 +14,7 @@ end
 Vagrant.configure("2") do |config|
   (1..MAX_NODES).each do |id|
     config.vm.define "db-node-#{id}" , primary: true do |subconfig|
+        subconfig.vm.synced_folder '.', '/vagrant', disabled: true
         subconfig.ssh.private_key_path = SSH_KEY
         subconfig.vm.hostname = "db-node-#{id}"
         subconfig.vm.provider "docker" do |d|
