@@ -12,7 +12,7 @@ To run this repo is necessary to install:
 * Vagrant: https://developer.hashicorp.com/vagrant/downloads
 * Docker Provider for Vagrant: https://developer.hashicorp.com/vagrant/docs/provisioning/docker
 
-Tested on M1 in my macbook.
+Tested on M1 and intel macbooks.
 
 ## Usage
 
