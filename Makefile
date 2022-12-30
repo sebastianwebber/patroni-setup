@@ -1,4 +1,4 @@
-ANSIBLE_IMG_NAME = "ghcr.io/sebastianwebber/patroni-setup/ansible:latest"
+ANSIBLE_IMG_NAME = "ghcr.io/sebastianwebber/patroni-setup/ansible:main"
 PROJECT_ROOT = $(shell pwd)
 
 create-machines:
@@ -10,11 +10,6 @@ ansible-ping:
 
 ansible-setup: 
 	./bin/ansible-playbook.sh -i inventory.yaml playbook.yaml
-
-ansible-build:
-	docker build \
-		--tag $(ANSIBLE_IMG_NAME) \
-		$(PROJECT_ROOT)/images/ansible
 
 ansible-img-name:
 	@echo $(ANSIBLE_IMG_NAME)
