@@ -1,6 +1,6 @@
 # Patroni SET UP
 
-This repo is inspired by [this post](https://pgstef.github.io/2022/07/11/patroni_on_pure_raft.html) and it consists in the set up of 3 "VMs with ssh" started by vagrant, and the ansible setup to install patroni.
+This repo is inspired by [this post](https://pgstef.github.io/2022/07/11/patroni_on_pure_raft.html) and it consists in the set up of 3 "VMs with ssh" started by vagrant, and the ansible setup(that runs on docker too) to install patroni.
 
 
 ## Requirements
@@ -8,8 +8,6 @@ This repo is inspired by [this post](https://pgstef.github.io/2022/07/11/patroni
 To run this repo is necessary to install:
 
 * GNU Make
-* Python 3.9+
-* Pipenv: https://github.com/pypa/pipenv
 * Docker: https://docs.docker.com/get-docker/
 * Vagrant: https://developer.hashicorp.com/vagrant/downloads
 * Docker Provider for Vagrant: https://developer.hashicorp.com/vagrant/docs/provisioning/docker
