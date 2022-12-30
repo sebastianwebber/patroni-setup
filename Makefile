@@ -1,15 +1,26 @@
+ANSIBLE_IMG_NAME = "ghcr.io/sebastianwebber/patroni-setup/ansible:latest"
+PROJECT_ROOT = $(shell pwd)
+
 create-machines:
 	vagrant up
 	vagrant ssh-config > vagrant-ssh.cfg
 
-pipenv-setup:
-	pipenv install
+ansible-ping: 
+	./bin/ansible.sh -m ping -i inventory.yaml all
 
-ansible-ping: pipenv-setup
-	pipenv run ansible -m ping -i inventory.yaml all
+ansible-setup: 
+	./bin/ansible-playbook.sh -i inventory.yaml playbook.yaml
 
-ansible-setup: pipenv-setup
-	pipenv run ansible-playbook -i inventory.yaml playbook.yaml
+ansible-build:
+	docker build \
+		--tag $(ANSIBLE_IMG_NAME) \
+		$(PROJECT_ROOT)/images/ansible
+
+ansible-img-name:
+	@echo $(ANSIBLE_IMG_NAME)
+
+project-root:
+	@echo $(PROJECT_ROOT)
 
 clean:
 	vagrant destroy -f
