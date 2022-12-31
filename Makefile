@@ -19,3 +19,4 @@ project-root:
 
 clean:
 	vagrant destroy -f
+	rm -f ./inventory.yaml
