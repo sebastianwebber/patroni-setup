@@ -1,6 +1,5 @@
-NODE_IMAGE = "generic/rocky8"
 MAX_NODES = 3
-SSH_KEY = File.expand_path("./images/rocky8-ansible/local-cluster-rsa-key")
+SSH_KEY = File.expand_path("./images/rocky9-ansible/local-cluster-rsa-key")
 ENV['VAGRANT_DEFAULT_PROVIDER'] = 'docker'
 
 unless File.exists?(SSH_KEY)
@@ -18,7 +17,7 @@ Vagrant.configure("2") do |config|
         subconfig.ssh.private_key_path = SSH_KEY
         subconfig.vm.hostname = "db-node-#{id}"
         subconfig.vm.provider "docker" do |d|
-            d.build_dir = "./images/rocky8-ansible"
+            d.build_dir = "./images/rocky9-ansible"
             d.has_ssh = true
             d.privileged = true
         end
